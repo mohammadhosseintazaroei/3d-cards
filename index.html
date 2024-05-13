@@ -1,0 +1,190 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cooly code</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+        background: linear-gradient(45deg, #9cb169, #86bf49);
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #card {
+        overflow: hidden;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding-top: 1vw;
+        position: relative;
+        background: rgb(23, 22, 22);
+        flex-direction: column;
+        cursor: pointer;
+        transition: transform 0.1s;
+        border-radius: 1vw;
+        box-shadow: rgb(0 0 0 / 66%) 0 30px 60px 0;
+        background: #062743;
+      }
+
+      #card,
+      #panel-cover {
+        width: 16vw;
+        height: 48vh;
+        width: 15vw;
+        height: 42vh;
+        width: 16vw;
+        height: 20vw;
+      }
+
+      #panel-cover {
+        position: absolute;
+        transition: transform 0.1s;
+        transform: perspective(400px) rotateX(0deg) rotateY(0deg);
+        transform-style: preserve-3d;
+        box-shadow: 1.5rem 2.5rem 5rem 0.7rem rgba(0, 0, 0, 0.13);
+        display: flex;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.1s ease 0s, width 0.1s ease 0s,
+          height 0.1s ease 0s;
+      }
+
+      #panel-cover img {
+        width: 100%;
+        height: auto;
+      }
+
+      #panel-container {
+        position: relative;
+
+        width: 73%;
+        height: 56%;
+        overflow: hidden;
+        border-radius: 0.3vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #darkness-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.204);
+        box-shadow: inset 0 0 1vw 0.1vw #000000;
+        transition: 0.1s;
+        z-index: 2;
+      }
+
+      #card:hover #darkness-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.024);
+        box-shadow: inset 0 0 1vw 0.3vw #000000;
+      }
+
+      .panel-content {
+        color: #fff;
+        text-align: start;
+        transform: translateZ(80px) scale(0.8);
+        transform-style: preserve-3d;
+        overflow-wrap: break-word;
+        font-size: 2vw;
+        align-self: flex-start;
+        margin: 1vw 0 0 0.5vw;
+      }
+
+      .panel-content .song-title {
+        text-shadow: -2px 2px 3px #000, -1px 3px 15px #000;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .panel-content .song-artist {
+        font-size: 0.6em;
+        margin-top: 1vw;
+      }
+    </style>
+    <script src="https://cdn.themesinfo.com/detector.js"></script>
+    <script src="https://cdn.themesinfo.com/detector.js"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="card">
+        <div id="panel-container">
+          <div id="darkness-background"></div>
+          <div id="panel-cover">
+            <img src="final-1.jpg" alt="" srcset="" />
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="song-title">Bah Bah</div>
+          <div class="song-artist">یکم دیسکریپشن...</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let myCard = document.getElementById("card");
+      let child = document.getElementById("panel-cover");
+      let resetTimeOut,
+        transformAmount = 5;
+
+      function hanldeMOuseMove(mouseEvent) {
+        clearTimeout(resetTimeOut);
+        mouseX = mouseEvent.pageX;
+        mouseY = mouseEvent.pageY;
+        const centerX = myCard.offsetLeft + myCard.clientWidth / 2;
+        const centerY = myCard.offsetTop + myCard.clientHeight / 2;
+        const percentX = (mouseX - centerX) / (myCard.clientWidth / 2);
+        const percentY = -((mouseY - centerY) / (myCard.clientHeight / 2));
+
+        myCard.style.transform =
+          "perspective(400px) rotateY(" +
+          percentX * (transformAmount + 2) +
+          "deg) rotateX(" +
+          percentY * (transformAmount + 2) +
+          "deg)";
+        child.style.transform =
+          "perspective(400px) translateY(" +
+          percentY * (transformAmount - 3.5) +
+          "vw) translateX(" +
+          percentX * (transformAmount - 6) +
+          "vw) scale(1.2)";
+      }
+
+      function handleMouseLeave() {
+        resetTimeOut = setTimeout(() => {
+          myCard.style.transform = "";
+          child.style.transform = "";
+          child.style.width = "100%";
+          child.style.height = "100%";
+        }, 1000);
+      }
+
+      myCard.onmousemove = hanldeMOuseMove;
+      myCard.onmouseleave = handleMouseLeave;
+    </script>
+  </body>
+</html>
